@@ -1,29 +1,40 @@
 $(document).ready(function(){
 
   let weapons = ['rock', 'paper', 'scissors'];
-  let player = [];
-  let computer = [];
+  let player = undefined;
+  let computer = undefined;
+
+  let game = {
+    rounds: 1,
+    ties: 0,
+    winner: undefined,
+    playerWins: 0,
+    computerWins: 0
+  };
 
   $('.player-div').hide();
 
-  $('.start-button').on('click', function(){
 
+  $('.start-button').on('click', function(){
     $('.start-button').hide();
     $('.player-div').show();
-    gameChoices();
+  });
 
-    $('.rock').on('click', function(){
-      rock();
-    });
+  gameChoices();
 
-    $('.paper').on('click', function(){
-      paper();
-    });
+  $('.rock').on('click', function(){
+    player = 'rock';
+    gameLogic(player, computer);
+  });
 
-    $('.scissors').on('click', function(){
-      scissors();
-    });
+  $('.paper').on('click', function(){
+    player = 'paper';
+    gameLogic(player, computer);
+  });
 
+  $('.scissors').on('click', function(){
+    player = 'scissors';
+    gameLogic(player, computer);
   });
 
   function gameChoices(){
@@ -36,64 +47,52 @@ $(document).ready(function(){
   };
 
 
-  function rock(){
-    let computerGuess = weapons[Math.floor(Math.random() * weapons.length)];
-    computer.pop();
-    computer.push(computerGuess)
-    console.log(computer);
-    player.pop();
-    player.push('rock');
-    console.log(player);
+  function gameLogic(){
+    computer =  weapons[Math.floor(Math.random() * weapons.length)]
+    $('.rounds').text(`Round: ${game.rounds++}`)
 
-    if(player.join('') && computer.join('') === 'rock'){
+    if(player === 'rock' && computer === 'rock'){
+      winLoss();
+      game.ties++;
       console.log('tie')
-    }else if (player.join('') === 'rock' && computer.join('') === 'paper'){
-      console.log('Paper Beats Rock');
-    }else if (player.join('') === 'rock' && computer.join('') === 'scissors'){
-      console.log('Rock Beats Scissors');
-    }else{
-      console.log('Error');
-    }
-  };
-
-  function paper(){
-    let computerGuess = weapons[Math.floor(Math.random() * weapons.length)];
-    computer.pop();
-    computer.push(computerGuess)
-    console.log(computer);
-    player.pop();
-    player.push('paper');
-    console.log(player);
-
-    if(player.join('') === 'paper' && computer.join('') === 'rock'){
-      console.log('Paper Beats Rock')
-    }else if (player.join('') === 'paper' && computer.join('') === 'paper'){
+    }else if (player === 'rock' && computer === 'paper'){
+      winLoss();
+      game.computerWins++;
+      console.log('Computer Wins');
+    }else if (player === 'rock' && computer === 'scissors'){
+      winLoss();
+      game.playerWins++;
+      console.log('You Win');
+    }else if (player === 'paper' && computer === 'paper'){
+      winLoss();
+      game.ties++;
+      console.log('tie')
+    }else if(player === 'paper' && computer === 'rock'){
+      winLoss();
+      game.playerWins++;
+      console.log('Player Wins');
+    }else if(player === 'paper' && computer === 'scissors'){
+      winLoss();
+      game.computerWins++;
+      console.log('Computer Wins');
+    }else if(player === 'scissors' && computer === 'scissors'){
+      winLoss();
+      game.ties++;
       console.log('Tie');
-    }else if (player.join('') === 'paper' && computer.join('') === 'scissors'){
-      console.log('Scissors Beats Paper');
-    }else{
-      console.log('Error');
+    }else if(player === 'scissors' && computer === 'rock'){
+      winLoss();
+      game.computerWins++;
+      console.log('Computer Wins')
+    }else if(player === 'scissors' && computer === 'paper'){
+      winLoss();
+      game.playerWins++;
+      console.log('You Win');
     }
   };
 
-  function scissors(){
-    let computerGuess = weapons[Math.floor(Math.random() * weapons.length)];
-    computer.pop();
-    computer.push(computerGuess)
-    console.log(computer);
-    player.pop();
-    player.push('scissors');
-    console.log(player);
 
-    if(player.join('') === 'scissors' && computer.join('') === 'rock'){
-      console.log('Rock Beats Scissors')
-    }else if (player.join('') === 'scissors' && computer.join('') === 'paper'){
-      console.log('Scissors Beats Paper');
-    }else if (player.join('') === 'scissors' && computer.join('') === 'scissors'){
-      console.log('Tie');
-    }else{
-      console.log('Error');
-    }
-  };
-
+  function winLoss(){
+    $('.win-loss-ties').text(`Wins: ${game.playerWins} Loss: ${game.computerWins} Ties: ${game.ties}`)
+  }
+  
 });
