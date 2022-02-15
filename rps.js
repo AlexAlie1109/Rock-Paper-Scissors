@@ -41,10 +41,13 @@ $(document).ready(function(){
     weapons.forEach((choices) => {
       let button = $('<button>');
       button.attr('class', choices);
+      button.attr('value', choices)
       button.text(choices);
-      $('.player-choices').append(button);
+      $('#button-choices').append(button);
     });
   };
+
+
 
 
   function gameLogic(){
@@ -54,45 +57,47 @@ $(document).ready(function(){
     if(player === 'rock' && computer === 'rock'){
       winLoss();
       game.ties++;
-      console.log('tie')
+      $('.winner-loser').text("Game Tied");
     }else if (player === 'rock' && computer === 'paper'){
       winLoss();
       game.computerWins++;
-      console.log('Computer Wins');
+      $('.winner-loser').text("Computer Wins");
     }else if (player === 'rock' && computer === 'scissors'){
       winLoss();
       game.playerWins++;
-      console.log('You Win');
+      $('.winner-loser').text("You Win");
     }else if (player === 'paper' && computer === 'paper'){
       winLoss();
       game.ties++;
-      console.log('tie')
+      $('.winner-loser').text("Game Tied");
     }else if(player === 'paper' && computer === 'rock'){
       winLoss();
       game.playerWins++;
-      console.log('Player Wins');
+      $('.winner-loser').text("You Win");
     }else if(player === 'paper' && computer === 'scissors'){
       winLoss();
       game.computerWins++;
-      console.log('Computer Wins');
+      $('.winner-loser').text("Computer Wins");
     }else if(player === 'scissors' && computer === 'scissors'){
       winLoss();
       game.ties++;
-      console.log('Tie');
+      $('.winner-loser').text("Game Tied");
     }else if(player === 'scissors' && computer === 'rock'){
       winLoss();
       game.computerWins++;
-      console.log('Computer Wins')
+      $('.winner-loser').text("Computer Wins");
     }else if(player === 'scissors' && computer === 'paper'){
       winLoss();
       game.playerWins++;
-      console.log('You Win');
+      $('.winner-loser').text("You Win");
     }
   };
 
 
   function winLoss(){
-    $('.win-loss-ties').text(`Wins: ${game.playerWins} Loss: ${game.computerWins} Ties: ${game.ties}`)
-  }
-  
+    $('.win-loss-ties').text(`Wins: ${game.playerWins} Loss: ${game.computerWins} Ties: ${game.ties}`);
+  };
+
+
+
 });
